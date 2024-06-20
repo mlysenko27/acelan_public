@@ -1,0 +1,26 @@
+<div class="my-2 mx-2 grow-0 w-1/6" >
+  <label class="block text-gray-700 mb-2" for="piezoelectric-matrix">
+    Dielectric, /&epsilon;0, F/m
+  </label>
+  <div class="grid grid-cols-3 gap-2">
+    <%- editable = [11, 33] %>
+    <%- (1..3).each do |i| %>
+      <%- (1..3).each do |j| %>
+        <%- current = 10 * i + j %>
+        <input
+          id="stiffness-<%= current %>"
+          name="stiffness-<%= current %>"
+          type="text"
+          value="<%=material.dielectric(i, j) %>"
+          <%- if editable.include? current %>
+          required
+          class="w-1 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          <%- else %>
+          class="w-1 appearance-none border rounded w-full bg-gray-200 py-2 px-3 text-gray-700 leading-tight focus:outline-non"
+          disabled
+          <% end %>/>
+        <p class="text-red-500 text-xs hidden" id="stiffness-<%= current %>-error">Please enter a valid number</p>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<%= form_for @material, url: { action: "create" } do |f| %>
+  <div data-controller="material-form" class="p-8">
+    <div class="sm:col-span-3 px-2">
+      <label for="material_type"
+             class="block font-medium leading-6 text-gray-900">Material Type</label>
+      <div class="flex justify-start" >
+        <select id="material_type" name="material_type" selected="Anisotropic"
+                data-action="change->material-form#select_type"
+                data-material-form-target="selectedType"
+                class="block w-full h-12 rounded-md border-0 py-1.5
+               text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+               focus:ring-2 focus:ring-inset focus:ring-indigo-600
+               sm:max-w-xs sm:text-sm sm:leading-6">
+          <option>Anisotropic</option>
+          <option>Isotropic</option>
+          <option>Acoustic Liquid</option>
+        </select>
+        <%= f.submit 'Save', class: "mx-4 h-12 flex justify-center rounded-md border border-transparent
+  bg-indigo-600 py-1.5 px-4 font-medium text-white shadow-sm hover:bg-indigo-700
+  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      </div>
+      <div class="my-2 flex ">
+        <div class="my-2 mr-6 w-1/6">
+          <label class="font-medium leading-6 text-gray-900">
+            Name:
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value=""
+            required
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
+        focus:outline-none focus:shadow-outline"/>
+        </div>
+        <div class="my-2 mr-6 w-1/6">
+          <label class="font-medium leading-6 text-gray-900" for="source">
+            Source
+          </label>
+          <input
+            id="source"
+            name="source"
+            type="text"
+            value=""
+            required
+            class="appearance-none border rounded w-full py-2  text-gray-900 leading-tight focus:outline-none focus:shadow-outline"/>
+        </div>
+        <%=render partial:'materials/forms/scalar_numerical',
+                  locals: {label_text: 'Density', name: 'density'} %>
+      </div>
+
+      <div id="isotropic_input"  class="hidden" data-material-form-target="isotropicSection">
+        <div class="my-2 flex">
+          <div class="my-2 w-1/6 mr-6">
+            <label class="font-medium leading-6 text-gray-900">
+              Young Modulus:
+            </label>
+            <input
+              id="young"
+              name="iso[young]"
+              type="text" inputmode="decimal"
+              pattern="[0-9]*[.,]?[0-9]*"
+              required
+              class="appearance-none border rounded w-full py-2  text-gray-900 leading-tight focus:outline-none focus:shadow-outline"/>
+          </div>
+          <div class="my-2 w-1/6">
+            <label class="font-medium leading-6 text-gray-900">
+              Poison Coefficient:
+            </label>
+            <input
+              id="poison"
+              name="iso[poison]"
+              type="text" inputmode="decimal"
+              pattern="[0-9]*[.,]?[0-9]*"
+              required
+              class="appearance-none border rounded w-full py-2  text-gray-900 leading-tight focus:outline-none focus:shadow-outline"/>
+          </div>
+        </div>
+
+
+      </div>
+      </div>
+      <div id="anisotropic_input" data-material-form-target="anisotropicSection">
+        <div class="grid grid-cols-2">
+          <div>
+            <%=render partial: 'materials/forms/anisotropic/matrix6x6', locals: {material: @material} %>
+          </div>
+          <div >
+            <%=render partial: 'materials/forms/anisotropic/matrix6x3', locals: {material: @material} %>
+            <%=render partial: 'materials/forms/anisotropic/matrix3x3', locals: {material: @material} %>
+          </div>
+        </div>
+
+      </div>
+    <div id="acoustic_liquid_input" class="hidden" data-material-form-target="acousticLiquidSection">
+      <div class="m-2 flex">
+        <%=render  partial: 'materials/forms/scalar_numerical',
+                  locals: {label_text: 'Viscosity, Pa*s', name: 'viscosity'} %>
+        <%=render partial:'materials/forms/scalar_numerical',
+                  locals: {label_text: 'Speed of Sound, m/s', name: 'speed_of_sound'} %>
+      </div>
+      </div>
+
+    </div>
+
+    </div>
+
+  </div>
+
+<% end %>

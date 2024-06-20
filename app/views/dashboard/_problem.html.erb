@@ -1,0 +1,23 @@
+<tr data-action="click->dashboard#click"
+    data-dashboard-target="link"
+    data-dashboard-details-id="<%= model[:id] %>">
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6">
+    <%= model[:name] %>
+  </td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:table-cell">
+    <%= model[:date] %>
+  </td>
+  <td>
+    <div class="relative flex flex-col items-left group w-6">
+      <%=render partial: 'status_icon', locals: {status: model[:status]} %>
+    </div>
+  </td>
+</tr>
+
+<tr data-dashboard-target="details"
+    data-details-id="<%= model[:id] %>"
+    class="hidden">
+  <td>
+    Details
+  </td>
+</tr>
